@@ -48,41 +48,82 @@ fun Calculator(
             .fillMaxSize(),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        Column(modifier = Modifier.fillMaxWidth()
-            .clip(RoundedCornerShape(
-                topStart = 0.dp,
-                topEnd = 0.dp,
-                bottomStart = 40.dp,
-                bottomEnd = 40.dp
-            ))
+        Column(modifier = Modifier
+            .fillMaxWidth()
+            .clip(
+                RoundedCornerShape(
+                    topStart = 0.dp,
+                    topEnd = 0.dp,
+                    bottomStart = 40.dp,
+                    bottomEnd = 40.dp
+                )
+            )
             .background(MaterialTheme.colorScheme.primaryContainer)
             .weight(1f)
             .padding(bottom = 16.dp, start = 40.dp, end = 40.dp),
             horizontalAlignment = Alignment.End,
             verticalArrangement = Arrangement.Bottom
         ) {
-            Text(
-                text = state.value.expression,
-                fontSize = 36.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onPrimaryContainer
-            )
+            when(val currentState = state.value) {
+                is CalculatorState.Error -> {
+                    Text(
+                        text = currentState.expression,
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.error
+                    )
 
-            Text(
-                text = state.value.result,
-                fontSize = 17.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.onSecondaryContainer
-            )
+                    Text(
+                        text = "",
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                }
+                CalculatorState.Initial -> {}
+                is CalculatorState.Input -> {
+                    Text(
+                        text = currentState.expression,
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+
+                    Text(
+                        text = currentState.result,
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                }
+                is CalculatorState.Success -> {
+                    Text(
+                        text = currentState.result,
+                        fontSize = 36.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+
+                    Text(
+                        text = "",
+                        fontSize = 17.sp,
+                        fontWeight = FontWeight.SemiBold,
+                        color = MaterialTheme.colorScheme.onSecondaryContainer
+                    )
+                }
+            }
+
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .clickable {
                             viewModel.processCommand(CalculatorCommand.Input(Symbol.SQRT))
                         },
@@ -92,7 +133,8 @@ fun Calculator(
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .clickable {
                             viewModel.processCommand(CalculatorCommand.Input(Symbol.PI))
                         },
@@ -102,7 +144,8 @@ fun Calculator(
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .clickable {
                             viewModel.processCommand(CalculatorCommand.Input(Symbol.POWER))
                         },
@@ -112,7 +155,8 @@ fun Calculator(
                     fontWeight = FontWeight.SemiBold,
                 )
                 Text(
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier
+                        .weight(1f)
                         .clickable {
                             viewModel.processCommand(CalculatorCommand.Input(Symbol.FACTORIAL))
                         },
@@ -124,12 +168,14 @@ fun Calculator(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Clear)
@@ -146,7 +192,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.PARENTHESIS))
@@ -163,7 +210,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.PERCENT))
@@ -180,7 +228,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIVIDE))
@@ -198,12 +247,14 @@ fun Calculator(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_7))
@@ -220,7 +271,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_8))
@@ -237,7 +289,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_9))
@@ -254,7 +307,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.MULTIPLY))
@@ -272,12 +326,14 @@ fun Calculator(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_4))
@@ -294,7 +350,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_5))
@@ -311,7 +368,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_6))
@@ -328,7 +386,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.SUBTRACT))
@@ -346,12 +405,14 @@ fun Calculator(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_1))
@@ -368,7 +429,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_2))
@@ -385,7 +447,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_3))
@@ -402,7 +465,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.ADD))
@@ -420,12 +484,14 @@ fun Calculator(
         }
 
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
                 .wrapContentHeight(),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Box(
-                modifier = Modifier.weight(2f)
+                modifier = Modifier
+                    .weight(2f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DIGIT_0))
@@ -442,7 +508,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Input(Symbol.DOT))
@@ -459,7 +526,8 @@ fun Calculator(
             }
 
             Box(
-                modifier = Modifier.weight(1f)
+                modifier = Modifier
+                    .weight(1f)
                     .clip(CircleShape)
                     .clickable {
                         viewModel.processCommand(CalculatorCommand.Evaluate)
